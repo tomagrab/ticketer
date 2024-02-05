@@ -1,6 +1,6 @@
 import { HomeStackParamListType } from '@/lib/Types/HomeStackParamListType/HomeStackParamListType';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Text, View } from 'react-native';
+import { Button, Text, View } from 'react-native';
 
 type DetailsScreenProps = NativeStackScreenProps<
   HomeStackParamListType,
@@ -20,7 +20,11 @@ export default function DetailsScreen({
   const updatedAt = route.params.ticket.updatedAt;
 
   return (
-    <View className="flex-1 items-center justify-center bg-gray-100 p-4">
+    <View className="bg-gray-100 p-4">
+      <View className="flex-row justify-between">
+        <Text className="text-xl font-bold">Ticket Details</Text>
+        <Button onPress={() => navigation.goBack()} title="Back" />
+      </View>
       <View className="w-full max-w-sm rounded-lg bg-white p-6 shadow-lg">
         <Text className="text-lg font-bold text-gray-800">{title}</Text>
         <Text className="mt-2 text-gray-600">{description}</Text>

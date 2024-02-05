@@ -1,8 +1,8 @@
 import { HomeStackParamListType } from '@/lib/Types/HomeStackParamListType/HomeStackParamListType';
-import CreateTicketScreen from '@/screens/CreateTicketScreen/CreateTicketScreen';
 import DetailsScreen from '@/screens/DetailsScreen/DetailsScreen';
 import HomeScreen from '@/screens/HomeScreen/HomeScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Button } from 'react-native';
 
 const Stack = createNativeStackNavigator<HomeStackParamListType>();
 
@@ -12,17 +12,15 @@ export default function HomeStack() {
       <Stack.Screen
         name="Home"
         component={HomeScreen}
-        options={{ title: 'Tickets' }}
-      />
-      <Stack.Screen
-        name="CreateTicket"
-        component={CreateTicketScreen}
-        options={{ title: 'Create Ticket' }}
+        options={{ title: 'Tickets', headerShown: false }}
       />
       <Stack.Screen
         name="Details"
         component={DetailsScreen}
-        options={{ title: 'Details' }}
+        options={({ navigation }) => ({
+          title: 'Details',
+          headerShown: false,
+        })}
       />
     </Stack.Navigator>
   );

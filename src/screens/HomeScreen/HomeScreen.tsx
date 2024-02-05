@@ -1,12 +1,16 @@
 import { HomeStackParamListType } from '@/lib/Types/HomeStackParamListType/HomeStackParamListType';
 import { TicketType } from '@/lib/Types/TicketType/TicketType';
-import { useNavigation } from '@react-navigation/native';
-import {
-  NativeStackNavigationProp,
-  NativeStackScreenProps,
-} from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useState } from 'react';
-import { Button, FlatList, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Button,
+  FlatList,
+  Modal,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import CreateTicketScreen from '@/screens/CreateTicketScreen/CreateTicketScreen';
 
 const ticketsData: TicketType[] = [
   {
@@ -36,103 +40,28 @@ const ticketsData: TicketType[] = [
     createdAt: new Date().toLocaleString(),
     updatedAt: new Date().toLocaleString(),
   },
-  {
-    id: '4',
-    title: 'Fourth Ticket',
-    description: 'This is the fourth ticket',
-    status: 'Open',
-    priority: 'Low',
-    createdAt: new Date().toLocaleString(),
-    updatedAt: new Date().toLocaleString(),
-  },
-  {
-    id: '5',
-    title: 'Fifth Ticket',
-    description: 'This is the fifth ticket',
-    status: 'Closed',
-    priority: 'High',
-    createdAt: new Date().toLocaleString(),
-    updatedAt: new Date().toLocaleString(),
-  },
-  {
-    id: '6',
-    title: 'Sixth Ticket',
-    description: 'This is the sixth ticket',
-    status: 'Open',
-    priority: 'Low',
-    createdAt: new Date().toLocaleString(),
-    updatedAt: new Date().toLocaleString(),
-  },
-  {
-    id: '7',
-    title: 'Seventh Ticket',
-    description: 'This is the seventh ticket',
-    status: 'Open',
-    priority: 'High',
-    createdAt: new Date().toLocaleString(),
-    updatedAt: new Date().toLocaleString(),
-  },
-  {
-    id: '8',
-    title: 'Eighth Ticket',
-    description: 'This is the eighth ticket',
-    status: 'Closed',
-    priority: 'Medium',
-    createdAt: new Date().toLocaleString(),
-    updatedAt: new Date().toLocaleString(),
-  },
-  {
-    id: '9',
-    title: 'Ninth Ticket',
-    description: 'This is the ninth ticket',
-    status: 'Open',
-    priority: 'Low',
-    createdAt: new Date().toLocaleString(),
-    updatedAt: new Date().toLocaleString(),
-  },
-  {
-    id: '10',
-    title: 'Tenth Ticket',
-    description: 'This is the tenth ticket',
-    status: 'Open',
-    priority: 'High',
-    createdAt: new Date().toLocaleString(),
-    updatedAt: new Date().toLocaleString(),
-  },
-  {
-    id: '11',
-    title: 'Eleventh Ticket',
-    description: 'This is the eleventh ticket',
-    status: 'Closed',
-    priority: 'Low',
-    createdAt: new Date().toLocaleString(),
-    updatedAt: new Date().toLocaleString(),
-  },
-  {
-    id: '12',
-    title: 'Twelfth Ticket',
-    description: 'This is the twelfth ticket',
-    status: 'Open',
-    priority: 'Medium',
-    createdAt: new Date().toLocaleString(),
-    updatedAt: new Date().toLocaleString(),
-  },
 ];
 
 type HomeScreenProps = NativeStackScreenProps<HomeStackParamListType, 'Home'>;
 
 export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   const [tickets, setTickets] = useState<TicketType[]>(ticketsData);
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View className="flex-1 bg-gray-100 p-4">
       <View className="flex-row items-center">
         <View></View>
         <Text className="flex-1 text-center text-2xl font-bold">Tickets</Text>
-        <Button
-          title="Create Ticket"
-          onPress={() => navigation.navigate('CreateTicket')}
-        />
+        <Button title="Create Ticket" onPress={() => setModalVisible(true)} />
+        <Modal animationType="slide" visible={modalVisible}>
+          <CreateTicketScreen
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            tickets={tickets}
+            setTickets={setTickets}
+          />
+        </Modal>
       </View>
       <View className="flex-1">
         <FlatList
